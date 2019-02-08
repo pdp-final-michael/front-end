@@ -6,7 +6,8 @@ def tagMatchRules = [
       [meType: 'SERVICE']
     ],
     tags : [
-      [context: 'CONTEXTLESS', key: 'app', value: 'front-end'],
+      [context: 'CONTEXTLESS', key: 'app', value: 'sockshop'],
+      [context: 'CONTEXTLESS', key: 'service', value: 'front-end'],
       [context: 'CONTEXTLESS', key: 'environment', value: 'dev']
     ]
   ]
@@ -17,8 +18,8 @@ pipeline {
     label 'nodejs'
   }
   environment {
-    APP_NAME = "front-end"
-    ARTEFACT_ID = "sockshop/" + "${env.APP_NAME}"
+    SERVICE_NAME = "front-end"
+    ARTEFACT_ID = "sockshop/" + "${env.SERVICE_NAME}"
     VERSION = readFile('version').trim()
     TAG = "${env.DOCKER_REGISTRY_URL}:5000/library/${env.ARTEFACT_ID}"
     TAG_DEV = "${env.TAG}-${env.VERSION}-${env.BUILD_NUMBER}"
@@ -113,7 +114,7 @@ pipeline {
       steps {
         build job: "k8s-deploy-staging",
           parameters: [
-            string(name: 'APP_NAME', value: "${env.APP_NAME}"),
+            string(name: 'SERVICE_NAME', value: "${env.SERVICE_NAME}"),
             string(name: 'TAG_STAGING', value: "${env.TAG_STAGING}"),
             string(name: 'VERSION', value: "${env.VERSION}")
           ]
