@@ -17,7 +17,7 @@ spec:
         image: dynatracesockshop/front-end:0.5.0
         env: 
         - name: DT_TAGS
-          value: "product=sockshop"
+          value: "application=sockshop"
         - name: DT_CUSTOM_PROP
           value: "SERVICE_TYPE=FRONTEND"
         resources:
